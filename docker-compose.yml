@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: nico1804
+      MYSQL_DATABASE: lixo
+    ports:
+      - "3307:3306"  # Mapeando a porta 3307 do host para a 3306 do contêiner
+    volumes:
+      - db_data:/var/lib/mysql
+
+  app:
+    image: lixo-app
+    container_name: springboot-app
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/lixo
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: nico1804
+
+volumes:
+  db_data:
