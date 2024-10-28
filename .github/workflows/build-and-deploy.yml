@@ -22,7 +22,7 @@ jobs:
         run: mvn -B install -DskipTests --file ./pom.xml  # Faz o build do projeto, pulando os testes
 
       - name: Run specific test class
-        run: mvn -B exec:java -Dexec.mainClass="src.test.UserApiTests"  # Executa a classe de teste específica
+        run: mvn -B exec:java -Dexec.mainClass="src.test.tests.UserApiTests"  # Executa a classe de teste específica
 
   deploy:
     runs-on: ubuntu-latest
