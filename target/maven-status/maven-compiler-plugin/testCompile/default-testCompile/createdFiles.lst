@@ -1,1 +1,4 @@
+stepdefinitions\AuthSteps.class
 br\com\michel\lixo\LixoApplicationTests.class
+tests\UserApiTests.class
+service\AuthService.class

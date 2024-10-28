@@ -19,6 +19,10 @@ public class UserInsertDTO extends UserDTO implements Serializable {
         this.password = password;
     }
 
+    public UserInsertDTO() {
+
+    }
+
     public String getPassword() {
         return password;
     }
