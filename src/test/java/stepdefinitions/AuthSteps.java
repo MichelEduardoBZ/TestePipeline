@@ -1,19 +1,15 @@
 package stepdefinitions;
 
 import br.com.michel.lixo.service.ResourceNotFoundException;
-import com.networknt.schema.ValidationMessage;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
-import org.json.JSONException;
 import org.junit.Assert;
 import service.AuthService;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class AuthSteps {
     AuthService authService = new AuthService();
@@ -54,6 +50,5 @@ public class AuthSteps {
     }
 
     @E("o corpo de resposta de erro da API deve retornar a mensagem {string}")
-    public void oCorpoDeRespostaDeErroDaAPIDeveRetornarAMensagem(String arg0) {
-    }
+    public void oCorpoDeRespostaDeErroDaAPIDeveRetornarAMensagem(String arg0) {}
 }
