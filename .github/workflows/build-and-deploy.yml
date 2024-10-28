@@ -7,13 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  job-hello:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Imprimir mensagem
-        run: echo "Iniciando serviço"
-
-  checkout_java_docker:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
@@ -23,7 +17,15 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '17'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn -B clean package
+
+      - name: Run Tests
+        run: |
+          java -cp target/classes:target/test-classes org.junit.runner.JUnitCore com.suaempresa.suaprojeto.UserAPITests
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -44,33 +46,3 @@ jobs:
           push: false
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
-
-      - name: Executar scripts
-        run: |
-          git branch
-          java --version
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Build with Maven
-        run: mvn -B compile --file ./pom.xml
-
-      - name: Run UserApiTests directly
-        run: |
-          # Compilar a classe de teste diretamente
-          javac -cp ".:$(find ~/.m2/repository -type d | tr '\n' ':')" src/test/java/tests/UserApiTests.java
-          
-          # Executar o teste diretamente
-          java -cp ".:$(find ~/.m2/repository -type d | tr '\n' ':')" org.junit.platform.console.ConsoleLauncher \
-            --class-path src/test/java \
-            --select-class tests.UserApiTests
